@@ -1,14 +1,29 @@
 ﻿{% extends "base.html" %}
 {% block title %}Añadir post{% endblock %}
+
 {% block content %}
-<h1>Añadir post</h1>
-<form method="post" class="form">
-  <label>Título</label>
-  <input name="title" required>
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <div class="card app-card">
+      <div class="card-body p-4 p-lg-5">
+        <h1 class="h3 fw-bold mb-2">Añadir post</h1>
+        <p class="text-white-50 mb-4">Este es tu “tercer formulario” (además de login y register).</p>
 
-  <label>Contenido</label>
-  <textarea name="content" rows="5" required></textarea>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input class="form-control app-input" name="title" required maxlength="120" placeholder="Ej: Review del último álbum...">
+          </div>
 
-  <button type="submit">Guardar</button>
-</form>
+          <div class="mb-3">
+            <label class="form-label">Contenido</label>
+            <textarea class="form-control app-input" name="content" rows="5" required placeholder="Escribe aquí..."></textarea>
+          </div>
+
+          <button class="btn btn-success btn-app w-100" type="submit">Publicar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

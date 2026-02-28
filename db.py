@@ -5,6 +5,8 @@ DB_CONFIG = {
     "user": "root",
     "password": "",
     "database": "webapp_db",
+    "port": 3306,
+    "charset": "utf8mb4",
 }
 
 def get_conn():
@@ -13,27 +15,33 @@ def get_conn():
 def query_one(sql, params=()):
     conn = get_conn()
     cur = conn.cursor(dictionary=True)
-    cur.execute(sql, params)
-    row = cur.fetchone()
-    cur.close()
-    conn.close()
-    return row
+    try:
+        cur.execute(sql, params)
+        return cur.fetchone()
+    finally:
+        cur.close()
+        conn.close()
 
 def query_all(sql, params=()):
     conn = get_conn()
     cur = conn.cursor(dictionary=True)
-    cur.execute(sql, params)
-    rows = cur.fetchall()
-    cur.close()
-    conn.close()
-    return rows
+    try:
+        cur.execute(sql, params)
+        return cur.fetchall()
+    finally:
+        cur.close()
+        conn.close()
 
 def execute(sql, params=()):
     conn = get_conn()
     cur = conn.cursor()
-    cur.execute(sql, params)
-    conn.commit()
-    last_id = cur.lastrowid
-    cur.close()
-    conn.close()
-    return last_id
+    try:
+        cur.execute(sql, params)
+        conn.commit()
+        return cur.lastrowid
+    except:
+        conn.rollback()
+        raise
+    finally:
+        cur.close()
+        conn.close()
