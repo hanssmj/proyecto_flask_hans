@@ -1,0 +1,38 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Proyecto Flask{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav class="nav">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+
+    <div class="nav-right">
+      {% if session.get("user_id") %}
+        <span class="hello">Hola, {{ session.get("username") }}</span>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('add_post') }}">Añadir</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for m in messages %}<p>{{ m }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

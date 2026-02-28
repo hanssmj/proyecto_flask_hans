@@ -1,0 +1,17 @@
+﻿{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>Últimos posts</h1>
+
+{% if posts %}
+  {% for p in posts %}
+    <div class="card">
+      <h3>{{ p.title }}</h3>
+      <p class="meta">por {{ p.username }} · {{ p.created_at }}</p>
+      <p>{{ p.content }}</p>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No hay posts todavía.</p>
+{% endif %}
+{% endblock %}
